@@ -1,0 +1,49 @@
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>{{title}}</h1>
+                    <small>{{description}}</small>
+                    <p>
+                        <img src="/hapi-lantern/assets/images/magiclantern.jpg" />
+                    </p>
+                </section>
+                <section>
+                    <pre><code data-trim contenteditable>
+npm install hapi-lantern
+
+var Lantern = require('../');
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim contenteditable>
+var lanternOptions = {
+    basePath: Path.join(__dirname, 'decks'),
+    assets: Path.join(__dirname, 'assets'),
+    decks: [
+        {
+            title: 'Hapi-Lantern',
+            description: 'A Hapi plugin to bootstrap slide deck presentation',
+            filename: 'lantern',
+            paths: {
+                folder: Path.join(__dirname, 'decks'),
+                route: '/lantern'
+            },
+            type: 'Reveal',
+            theme: 'sky'
+        }
+    ]
+};
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim contenteditable>
+server.pack.register({
+    plugin: Lantern,
+    options: lanternOptions
+}, function (err) {
+                    </code></pre>
+                </section>
+                <section>
+                    <h1>Fin.</h1>
+                </section>
+            </div>

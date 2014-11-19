@@ -1,0 +1,32 @@
+{
+  "name": "hapi-lantern",
+  "version": "0.0.0",
+  "description": "Hapi plugin for serving slide decks",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test-cov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaw187/hapi-lantern.git"
+  },
+  "author": "James Weston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaw187/hapi-lantern/issues"
+  },
+  "homepage": "https://github.com/jaw187/hapi-lantern",
+  "dependencies": {
+    "bespoke": "1.x.x",
+    "handlebars": "^2.0.0",
+    "reveal.js": "2.x.x"
+  },
+  "peerDependencies": {
+    "hapi": "7.x.x"
+  },
+  "devDependencies": {
+    "lab": "5.x.x",
+    "code": "1.x.x",
+    "hapi": "7.x.x"
+  }
+}

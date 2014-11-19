@@ -1,0 +1,2198 @@
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Concerning the Front End of Things</title>
+
+        <meta name="description" content="Concerning the Front End of Things">
+        <meta name="author" content="Adam Bretz">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="/css/reveal.min.css">
+        <link rel="stylesheet" href="/css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '/css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+    <div class="reveal">
+        <div class="slides" id="deck">
+
+        <section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/758786/hapchat.png" data-background-size="initial"><div data-block-type="text" data-block-id="19721408d514c47edf225538cc22b769"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>HapChat</h1>
+</div></div>
+<div data-block-type="text" data-block-id="f817d00a66d1def2b929763469eed121"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p>building a familiar web experience using the hapi http server platform</p>
+</div></div></section><section><div data-block-type="text" data-block-id="694ad535a334610f0750aa0f766dcb29"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<p>Ben Acker</p>
+
+<p>Jeffrey White</p>
+
+<p>Kevin Stevens</p>
+
+<p>Adam Bretz</p>
+
+<p>Colin Ihrig</p>
+
+<p>James Weston</p>
+</div></div>
+<div data-block-type="text" data-block-id="8c9b3a5aa7356f7a3ef638353471f84c"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<p>pre-intro</p>
+
+<p>intro</p>
+
+<p>routes</p>
+
+<p>views</p>
+
+<p>plugins</p>
+
+<p>auth</p>
+</div></div></section><section><div data-block-type="text" data-block-id="6a8bf8eb4457377cd47dec4093198781"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>what&apos;s hapi?</h2>
+</div></div>
+<div data-block-type="text" data-block-id="05e1ff1d808f37899a77a25af40d9395"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="0">
+<p>it&apos;s an http framework for node.js, you crazy!</p>
+</div></div>
+<div data-block-type="image" data-block-id="6e9bd2568df7f51b2a403f7d96933861"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/758888/hapi.png" style="visibility: visible;" data-natural-width="355" data-natural-height="247"></div></div>
+<div data-block-type="text" data-block-id="0e794b8272a7f6aa754a485e9143d652"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="1">
+<h2>huh?</h2>
+</div></div>
+<div data-block-type="text" data-block-id="d32093019f9ee06e09fd53b90181768e"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="2">
+<p>you know how we keep having to build &quot;web servers&quot; and &quot;RESTful services&quot;? hapi makes that really easy, so you can focus on your business logic instead of http bullcrap.</p>
+</div></div>
+<div data-block-type="text" data-block-id="8ee0363ef97401df33c28b5d3110428e"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="3">
+<h2>sounds neat!</h2>
+</div></div>
+<div data-block-type="text" data-block-id="b56049be492f7548b0279662cff5b008"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="4">
+<p>word.</p>
+</div></div></section><section><div data-block-type="text" data-block-id="c04cad222c7e5b7a41ae5d855e56c97d"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h2>there&apos;s like tons of stuff all over the place to help you learn about hapi</h2>
+</div></div>
+<div data-block-type="text" data-block-id="67ff9b41b968cdee9250b0af15fdb8b0"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>you guys,</h1>
+</div></div></section><section class="stack"><section><div data-block-type="text" data-block-id="84c5da5f5f5c507bcc244756f8722351"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com</h2>
+</div></div>
+<div data-block-type="image" data-block-id="14ff85db8f24d36ccd3bf35854ce88a8"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759073/hapiweb.jpg" style="visibility: visible;" data-natural-width="1048" data-natural-height="676"></div></div></section><section>
+    <div data-block-type="text" data-block-id="7a38d601399c81e4d5fecf1792d13476">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com/tutorials</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="04b83e35aef304a787fd9baf36c5b147">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759089/hapitut.jpg" style="visibility: visible;" data-natural-width="1048" data-natural-height="839">
+            </div>
+        </div>
+    </section><section>
+    <div data-block-type="text" data-block-id="4fb300d322c0657fcbb0e3ed10a72016">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com/api</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="44c49e7208e9aa4e6f5f82db5301c8aa">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759096/hapiapi.jpg" style="visibility: visible;" data-natural-width="1050" data-natural-height="870">
+            </div>
+        </div>
+    </section><section>
+    <div data-block-type="text" data-block-id="436c1124e77f25ae0316957514bec0ba">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>workshopper</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="18ae7a46a2c1f09d28ae5aede12cf734">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759191/hapiworkshopper.jpg" style="visibility: visible;" data-natural-width="535" data-natural-height="417">
+            </div>
+        </div>
+    <div data-block-type="text" data-block-id="c7db2ead317e0aaee883ad7341847957">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<pre style="text-align: center;">npm install -g makemehapi</pre>
+</div>
+        </div>
+<div data-block-type="text" data-block-id="0900974b942724ea8e4201490ece9f10">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<p>(props to Lin Clark)</p>
+</div>
+        </div></section><section>
+    <div data-block-type="text" data-block-id="f0b994dcd65df50ece79794c988b2401">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>irc #hapi</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="6279fb484aca345cbfd03019ef1ebb0f">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759219/hapiirc.jpg" style="visibility: visible;" data-natural-width="933" data-natural-height="637">
+            </div>
+        </div>
+    </section></section><section><div data-block-type="text" data-block-id="44a0e9b7cbb0cfb35add68c4ac9a745c"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h3 style="text-align:left">hapi is ridiculously easy to get started with, but it also totally supports all that weird http stuff like a champ</h3>
+</div></div>
+<div data-block-type="text" data-block-id="6510855d54076eb9bc36f684a984f3bc"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>you guys,</h1>
+</div></div>
+<div data-block-type="text" data-block-id="ea82e71ed959b3b335222d30efba1e0a"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li class="fragment" data-fragment-index="1">several flavors of auth</li>
+	<li class="fragment" data-fragment-index="1">https</li>
+	<li class="fragment" data-fragment-index="1">smart request routing</li>
+	<li class="fragment" data-fragment-index="1">streaming</li>
+	<li class="fragment" data-fragment-index="1">caching</li>
+	<li class="fragment" data-fragment-index="1">CORS</li>
+</ul>
+</div></div></section><section><div data-block-type="text" data-block-id="f52e0856153cbe5cd58e56134d43baaf"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>plugins!</h1>
+</div></div>
+<div data-block-type="text" data-block-id="4ce8dc21bd1a9f1abfd3b4cd10bc61d7"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h3>hapi has a really intuitive plugin architecture that lets you build your tools as plugins you can share among your hapi servers</h3>
+</div></div></section><section><div data-block-type="text" data-block-id="b017c1e32b30cfa70ec72b853ebdd860"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1 style="text-align:center">HapChat</h1>
+</div></div>
+<div data-block-type="text" data-block-id="f7a5ee14da112548335ec19f7d4be0f3"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<h2>don&apos;t call it a ripoff</h2>
+</div></div>
+<div data-block-type="image" data-block-id="af1d868adcef1c1e6b42cd10774de742"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759403/hapchat.png" style="visibility: visible;" data-natural-width="144" data-natural-height="144"></div></div>
+<div data-block-type="text" data-block-id="a469e9f5dafb3f528a44a93ea01705dc"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="1">
+<h2>cause that&apos;s mean</h2>
+</div></div></section><section><div data-block-type="text" data-block-id="0589a7483514a89ce566bbcfc7cfb2ff"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1 style="text-align: center;">respect</h1>
+</div></div>
+<div data-block-type="text" data-block-id="32a9644fb056e38a6b7220a2d5db10a0"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<p>Don&apos;t be a yutz. Please read EmpireNode&apos;s Code of Conduct:</p>
+</div></div>
+<div data-block-type="text" data-block-id="d5fb6b128174c406458515a5db0d0787"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<p><a href="http://jsconf.com/codeofconduct.html" target="_blank">http://jsconf.com/codeofconduct.html</a></p>
+</div></div></section><section><div data-block-type="text" data-block-id="b0e59ea7be7c7d432d67a902789e907b"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>clone<br>
+the<br>
+repo</h1>
+</div></div></section><section><div data-block-type="text" data-block-id="fc8fdbafe84a9b80f86cdc61d099d321"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>let&apos;s<br>
+talk project<br>
+layout</h1>
+</div></div></section><section><div data-block-type="text" data-block-id="df217d3d794f9113e18107a9aedcd31b"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>And<br>
+I&apos;m<br>
+Done</h1>
+</div></div></section><section class="stack"><section><div data-block-type="text" data-block-id="babefd808ccc0c13f6bf5922d8e4ca49"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Routes in Hapi</h1>
+
+<p> </p>
+
+<p>Or, Routing Hapi-ly</p>
+</div></div></section><section><div data-block-type="text" data-block-id="5472663b2e7f6ba04fd5f8cfc4188e89"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Basic Routing- gets</h1>
+</div></div>
+<div data-block-type="image" data-block-id="85f71be6a670255d98f4023fd5d53b00"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764592/pasted-from-clipboard.png" style="visibility: visible;" data-natural-width="828" data-natural-height="534"></div></div></section><section><div data-block-type="text" data-block-id="16848cdeb6e74bc78585e105d74b260c"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>Post Example</h2>
+</div></div>
+<div data-block-type="image" data-block-id="85f053045204150a542e874b2811e0d7"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764598/pasted-from-clipboard.png" data-natural-width="924" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="73f352e6f2f7107a7bdb61d681d55945"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Paths</h1>
+</div></div>
+<div data-block-type="image" data-block-id="ed4b199f2ae2d6165ad57142af6a05f0"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764602/pasted-from-clipboard.png" data-natural-width="828" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="498560491850c62002a209c128cb1153"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+
+<p> </p>
+</div></div>
+<div data-block-type="image" data-block-id="3e2a9b6902311260c97c8783695f270e"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764608/pasted-from-clipboard.png" data-natural-width="1003" data-natural-height="486" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="e52fc956cf2021f3a678764b248ce615"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+</div></div>
+<div data-block-type="image" data-block-id="bfe2ba5b4b1a8edb6ea72f757e274337"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764613/pasted-from-clipboard.png" data-natural-width="1003" data-natural-height="486" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="6563cff418f3bbe690eb9f485085edf5"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+</div></div>
+<div data-block-type="image" data-block-id="138890f721f6f4cac5af21414c308dde"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764616/pasted-from-clipboard.png" data-natural-width="679" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="da29637d6ec340b7868413eba1389f9f"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>What if I don&apos;t like the hard stuff, and want to use config?</strong></p>
+</div></div>
+<div data-block-type="image" data-block-id="a7e679776e18857eeb5526ac61d19078"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764622/pasted-from-clipboard.png" data-natural-width="1288" data-natural-height="526" style="visibility: visible;"></div></div></section><section><div data-block-type="image" data-block-id="cc7b5580cef20b2722b9c90de34a5530"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764624/pasted-from-clipboard.png" data-natural-width="644" data-natural-height="566" style="visibility: visible;"></div></div>
+<div data-block-type="text" data-block-id="ba85af135b4e982b8b5de20a9a6e9a84"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>What other cool stuff can I put in my config? Validation!</strong></p>
+</div></div></section><section><div data-block-type="text" data-block-id="3e4490eb5d0161f94537bd639ec24ceb"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>Any other cool stuff we can put in the config?</strong></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p>Of course! Views!</p>
+</div></div></section></section><section>
+                <h1>Views and Templates</h1>
+            </section><section>
+                <h3>What We Need</h3>
+                <ul>
+                    <li>Static File Server</li>
+                    <li>Template Engine Integration</li>
+                    <li>Reusable Layouts</li>
+                    <li>Rendering a view with a Context</li>
+                </ul>
+            </section><section>
+                <section>
+                    <h3>Static File Server</h3>
+                    <p>This question comes up often enough in IRC and GitHub to call out specifically</p>
+                    <pre class="fragment" data-fragment-index="0"><code>
+server.route({
+    method: &apos;GET&apos;,
+    path: &apos;/static/{path*}&apos;,
+    config: {
+        auth: false,
+        handler: {
+            directory: {
+                path: Path.join(server.settings.app.root, &apos;static&apos;),
+                listing: false
+            }
+        },
+        cache: {
+            expiresIn: 1000 * 60 * 60 * 24 * 5
+        }
+    }
+});
+                  </code></pre>
+                <p class="fragment" data-fragment-index="1">So this is the general &quot;serve static files&quot; route most web servers need.</p>
+                </section>
+                <section>
+                    <h3>Dissecting the File Server Code</h3>
+                    <p>Regular route with a path, a method, and a configuration</p>
+                    <p>Uses the <b>directory</b> option for the handler, which is documented <a href="http://hapijs.com/api#serverrouteoptions">here</a></p>
+                    <ul>
+                        <li><b>path</b> tells hapi what folder to look through for the requested files.</li>
+                        <li><b>listing</b> tells hapi to not return a listing of files in this directory if &quot;/static&quot; is requested.</li>
+                    </ul>
+                </section>
+            </section><section>
+                <section>
+                    <h3>View Engine Integration</h3>
+                    <p>Like everything else, view engine integration is handled with configuration opens via <b>server.views</b></p>
+                    <p>Supports handlebars, Jade, swig, etc. Really anything that has a <b>compile(context)</b> function</p>
+                    <p class="fragment" data-fragment-index="0">Hapi 7.0 update: the bulk of this logic has been moved into a new module named vision.</p>
+                </section>
+                <section>
+                    <h3>Hanging on to Handlebars</h3>
+                    <pre><code>
+server.views({
+    engines: {
+        html: require(&apos;handlebars&apos;)
+    },
+    path: Path.join(__dirname, &apos;static&apos;, &apos;views&apos;),
+    layoutPath: Path.join(__dirname, &apos;static&apos;, &apos;views&apos;, &apos;layout&apos;),
+    layout: true,
+    layoutKeyword: &apos;partial&apos;
+});
+                    </code></pre>
+                    <p>This is a pretty typical configuration to use &quot;handlebars&quot; server side. This configuration tells hapi/vision to use the handlebars compiller for any view file ending with &quot;.html&quot;.</p>
+                    <p>We&apos;ve elected to use <a href="http://handlebarsjs.com/">handlebars</a> for this application because it uses more of the hapi options. If you use Jade, most of the partial, block, and layouts are handled internally by Jade.</p>
+                    <p class="fragment" data-fragment-index="0">What&apos;s the deal with the rest of those options?</p>
+                </section>
+            </section><section>
+                <h3>Building a Layout File</h3>
+                <p>A layout file is like the side of a house with a window. The brick, roof, color, and presence of a chimney don&apos;t change; the contents of the window does.</p>
+                <p class="fragment" data-fragment-index="0">Let&apos;s quickly go through the set up of how you use layout files with hapi and handlebars.</p>
+            </section><section>
+                <section>
+                    <h3>Making a Home View</h3>
+                    <p>We&apos;ve got our &quot;layout.html&quot; file, now lets make it actually show the user something</p>
+                    <p class="fragment" data-fragment-index="0">Create an &quot;index.html&quot; file in &quot;static/views&quot;</p>
+                    <p class="fragment" data-fragment-index="1">Add a <b>GET</b> route and in the handler use <b>reply.view(&apos;index&apos;)</b></p>
+                </section>
+                <section>
+                    <h3>What Happens?</h3>
+                    <ol>
+                        <li class="fragment" data-fragment-index="0">The request of &quot;/&quot; comes into the server and is routed to the proper handler</li>
+                        <li class="fragment" data-fragment-index="1">In the handler, we run <b>reply.view(&apos;index&apos;)</b></li>
+                        <li class="fragment" data-fragment-index="2"><b>layout</b>, <b>layoutPath</b>, and <b>layoutKeyword</b> are all combined here to first compile &quot;layout.html&quot; (or get it from cache) then &quot;index.html&quot; and place that result inside <b>layoutKeyword</b></li>
+                        <li class="fragment" data-fragment-index="3">The <b>reply</b> interface then sends this block of HTML back out to the client, and now you&apos;ve got yourself a UI.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h3>Putting it into Context</h3>
+                    <p>The second argument to <b>reply.view</b> is the context object that you can use in the view</p>
+                    <pre><code>
+    <h1>Comments</h1>
+    <p>This package uses the following modules</p>
+    <div id="deps">
+        {{#each modules}}
+        <h2><a href="https://www.npmjs.org/package/{{slug}}">{{name}}</a></h2>
+        <div>{{body}}</div>
+        {{/each}}
+    </div>
+                    </code></pre>
+                    <p>So with that view, we should pass a context object that has a <b>modules</b> key that is an array of objects with <b>name</b>, <b>slug</b>, and <b>body</b> values.</p>
+                </section>
+                <section>
+                    <h3>Putting it into Context, Too</h3>
+                    <p>If we pass a context object that looks like this:</p>
+                    <pre><code>
+{
+    &quot;modules&quot;: [{
+        &quot;name&quot;: &apos;boom&apos;,
+        &quot;slug&quot;: &apos;boom&apos;
+    }, {
+        &quot;name&quot;: &apos;joi&apos;,
+        &quot;slug&quot;: &apos;joi&apos;
+    }]
+}
+                    </code></pre>
+                    <p>The view will render out how you&apos;d expect; a list of modules with links to the correct npm page.</p>
+                </section>
+                <section>
+                    <h3>Global Context</h3>
+                    <p>Sometimes you want data to be available in every view&apos;s context (app version, name, copyright data, build number...etc)</p>
+                    <p>Since there isn&apos;t a concept of middleware... where does that go?</p>
+                    <p class="fragment roll-in" data-fragment-index="0">Server extension points to the rescue!</p>
+                </section>
+                <section>
+                    <p>Server extension points are events the server emits that give developers a place to put logic that should be applied all routes.</p>
+                    <p>There are a bunch of different events we can listen for listed <a href="https://github.com/hapijs/hapi/blob/master/docs/Reference.md#request-lifecycle">here</a> but we are going to use <b>onPreResponse</b></p>
+                    <pre class="fragment" data-fragment-index="0"><code>
+server.ext(&apos;onPreResponse&apos;, function (request, reply) {
+
+    if (request.response.variety === &apos;view&apos;) {
+        request.response.source.context = Hoek.applyToDefaults({
+            name:&apos;a sweet app!&apos;,
+            version: &apos;0.9.9999 (but not 1)&apos;
+        }, request.response.source.context || {});
+    }
+
+    reply();
+});
+                    </code></pre>
+                    <p class="fragment" data-fragment-index="1">This will merge in a global text into the existing view context.</p>
+                    <p class="fragment" data-fragment-index="2">However, this might not be necessary <a href="https://github.com/hapijs/vision/issues/4">soon...</a> stay tuned!</p>
+                </section>
+            </section><section>
+                <h3>TL;DR</h3>
+                <ul>
+                    <li>Make sure you static file server is set up.</li>
+                    <li>Easy to integrate view engines.</li>
+                    <li>Use those extension points!</li>
+                    <li>Don&apos;t reinvent the wheel; if you&apos;re using an template engine (and you should unless you&apos;re a robot), use layout files</li>
+                </ul>
+                <p>So we should probably start securing this thing...</p>
+            </section><section>
+                <h1>Plugins</h1>
+                <h3>Extending the hapi platform</h3>
+            </section><section>
+                <h3>What are Plugins?</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Primary ecosystem around hapi</li>
+                    <li class="fragment" data-fragment-index="1">Allow you to extend hapi</li>
+                    <li class="fragment" data-fragment-index="2">General purpose utilities</li>
+                    <li class="fragment" data-fragment-index="3">Custom business logic</li>
+                    <li class="fragment" data-fragment-index="4">Clean division of work among teams</li>
+                    <li class="fragment" data-fragment-index="5">Simple to build and use!</li>
+                </ul>
+            </section><section>
+                <h3>Existing Plugins</h3>
+
+                <img src="/images/plugins/good.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/crumb.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/poop.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/bassmaster.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/tv.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/scooter.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/lout.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/yar.png" height="90" style="border:none; background:none; box-shadow:none;">
+
+                <p class="fragment" data-fragment-index="0">Many more that don&apos;t have cool pictures!</p>
+            </section><section>
+                <h3>Creating a Plugin - Naming</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Pick a good name!</li>
+                    <li class="fragment" data-fragment-index="1">The name is used as a unique key</li>
+                    <li class="fragment" data-fragment-index="2">Publish to npm to own the name</li>
+                    <li class="fragment" data-fragment-index="3">Be careful with private plugins as names can conflict!</li>
+                </ul>
+            </section><section>
+                <h3>Creating a Plugin - Registration</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Plugin <strong>must</strong> expose a registration method:
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    // Plugin functionality
+
+    next();
+};
+                        </code></pre>
+                        <ul>
+                            <li><code>plugin</code> lets you interact with server pack</li>
+                            <li><code>options</code> allows configuration settings to be passed in</li>
+                            <li><code>next(err)</code> is called when registration is complete</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Creating a Plugin - Attributes</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Plugin <strong>must</strong> attach <code>attributes</code> object to <code>register()</code></li>
+                    <li class="fragment" data-fragment-index="1">Plugin <strong>must</strong> declare <code>name</code> and <code>version</code> attributes</li>
+                    <li class="fragment" data-fragment-index="2">Two ways to do this:
+                        <pre><code>
+module.exports.register.attributes = {
+    name: &apos;myPlugin&apos;,
+    version: 1.0.0
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="3">Or:
+                        <pre><code>
+module.exports.register.attributes = {
+    pkg: require(&apos;./package.json&apos;)
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="4"><code>multiple</code> attribute indicates if plugin can be registered multiple times to same server</li>
+                </ul>
+            </section><section>
+                <h3>What Can a Plugin Do?</h3>
+
+                <ul style="width:100%">
+                    <li class="fragment" data-fragment-index="0" style="width:100%">Register routes
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.route({
+        method: &apos;GET&apos;,
+        path: &apos;/&apos;,
+        handler: handler
+    });
+
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">Expose properties and methods
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.expose(&apos;greet&apos;, function () {
+
+        console.log(options.greeting);
+    });
+
+    next();
+};
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>What Can a Plugin Do? (Continued)</h3>
+
+                <ul style="width:100%">
+                    <li class="fragment" data-fragment-index="0">Access hapi and other plugins
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.plugins.otherPlugin.greet();
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">Declare dependencies on other plugins
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.dependency([&apos;poop&apos;, &apos;yar&apos;]);
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="2">Much more!</li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Loaded into server pack by calling <code>pack.register()</code>
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var MyPlugin = require(&apos;myPlugin&apos;);
+var server = new Hapi.Server();
+
+server.pack.register(MyPlugin, function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin (Continued)</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">To pass configuration options, pass an object:
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var server = new Hapi.Server();
+var plugin = {
+    plugin: require(&apos;myPlugin&apos;),
+    options: { greeting: &apos;Hello!&apos; }
+};
+
+server.pack.register(plugin, function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin (Continued)</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Multiple plugins can be registered by passing in an array:
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var MyPlugin = require(&apos;myPlugin&apos;);
+var YourPlugin = require(&apos;yourPlugin&apos;);
+var server = new Hapi.Server();
+
+server.pack.register([MyPlugin, YourPlugin], function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>More Plugin Resources</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">
+                        <p>hapijs.com Plugin Listing</p>
+                        <p><a href="http://hapijs.com/plugins">http://hapijs.com/plugins</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">
+                        <p>hapijs.com Plugin Tutorial</p>
+                        <p><a href="http://hapijs.com/tutorials/plugins">http://hapijs.com/tutorials/plugins</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="2">
+                        <p>hapi API Reference</p>
+                        <p><a href="https://github.com/hapijs/hapi/blob/master/docs/Reference.md">https://github.com/hapijs/hapi/blob/master/docs/Reference.md</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="3">
+                        <p>Search the npm repository</p>
+                        <pre><code>
+npm search hapi
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Now...</h3>
+                <div data-fragment-index="0">
+                    <p>How about a real example using bell?</p>
+                    <img src="/images/plugins/darkwingduck.gif">
+                </div>
+            </section><section>
+                    <h1>Auth</h1>
+                        <img src="/images/auth/dogs.jpg">
+                    <p></p>
+                </section><section>
+                    <h3>HTTP Basic Access Authentication</h3>
+                    <ul>
+                        <li>Defined by <a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a> and <a href="https://tools.ietf.org/html/rfc7235">RFC 7235</a></li>
+                        <li>Challenge/Response scheme</li>
+                        <li>Built in support in web browser</li>
+                        <li>Uses HTTP headers</li>
+                    </ul>
+                </section><section>
+                    <h3>Cookie Based Authentication</h3>
+                    <ul>
+                        <li>Username and password is collected by app</li>
+                        <li>Application endpoint validates payload and sets cookie</li>
+                        <li>Application considers user authenticated if cookie is present and valid</li>
+                    </ul>
+                </section><section>
+                    <h3>Third-party Authentication</h3>
+                    <ul>
+                        <li>Password less authentication</li>
+                        <li>Rely on popular sites to provide auth</li>
+                        <li>Uses a series of redirects and token exchanges to authorize</li>
+                        <li>OAuth defined by <a href="https://tools.ietf.org/html/rfc5849">RFC 5849</a> and <a href="https://tools.ietf.org/html/rfc6749">RFC 6749</a></li>
+                    </ul>
+                </section><section>
+                    <h4>How much work does it take to implement these schemes in Hapi?</h4>
+                    <p class="fragment" data-fragment-index="0">None</p>
+                    <p class="fragment" data-fragment-index="1">OK, some work...</p>
+                    <p class="fragment" data-fragment-index="2">But not much</p>
+                </section><section>
+                    <h3>Hapi.js Auth Plugins</h3>
+                    <ul>
+                        <li><a href="https://github.com/hapijs/hapi-auth-basic">https://github.com/hapijs/hapi-auth-basic</a></li>
+                        <li><a href="https://github.com/hapijs/hapi-auth-cookie">https://github.com/hapijs/hapi-auth-cookie</a></li>
+                        <li><a href="https://github.com/hapijs/bell">https://github.com/hapijs/bell</a></li>
+                        <li><a href="https://github.com/hapijs/hapi-auth-hawk">https://github.com/hapijs/hapi-auth-hawk</a></li>
+                    <p></p>
+                </ul></section><section class="stack">
+                    <section>
+                        <h1>Basic Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var Basic = require(&apos;hapi-auth-basic&apos;);
+                        </code></pre>
+                        <small>Load Hapi-auth-basic</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // User database
+    var users = {
+        empire: {
+            password: &apos;node&apos;,
+            name: &apos;Empire Node User&apos;
+        }
+    };
+
+    // Function used to validate a user
+    var validate = function (username, password, callback) {
+
+        var user = users[username];
+        var isValid = user &amp;&amp; user.password === password;
+        var credentials = { name: user.name } // request.auth.credentials
+
+        return callback(null, isValid, credentials);
+    };
+                        </code></pre>
+                        <small>Create user database and validation function</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome&apos; + request.auth.credentials.name);
+    };
+                        </code></pre>
+                        <small>Private handler can be assured that request.auth.credentials is for a valid user</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8187);
+
+    // Load plugins
+    server.pack.register(Basic, function (err) {
+
+        // Configure auth scheme
+        var authOptions = {
+            validateFun: validate
+        };
+        server.auth.strategy(&apos;YourSimpleAuth&apos;, &apos;basic&apos;, authOptions);
+                            </code></pre>
+                            <small>Register basic plugin and configure auth strategy to use validate function</small>
+                        </section>
+                        <section>
+                            <h3>Basic Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourSimpleAuth&apos;
+            }
+        });
+                            </code></pre>
+                            <small>Private handler gets an additional config param which references auth strategy</small>
+                        </section>
+                        <section>
+                            <h3>Basic Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+        // Start server
+        server.start(function () { console.log(&apos;Started...&apos;); });
+    });
+                        </code></pre>
+                    </section>
+                </section><section class="stack">
+                    <section>
+                        <h1>Cookie Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var AuthCookie = require(&apos;hapi-auth-cookie&apos;);
+    var Joi = require(&apos;joi&apos;);
+                        </code></pre>
+                        <small>Load Hapi-auth-cookie plugin instead of basic and load Joi for payload validation</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // User database
+    var users = {
+        empire: {
+            password: &apos;node&apos;,
+            name: &apos;Empire Node User&apos;
+        }
+    };
+                        </code></pre>
+                        <small>Still need a user database to reference</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var validate = function (request, reply) {
+
+        var username = request.payload.username;
+        var password = request.payload.password;
+
+        var user = users[username];
+        var isValid = user &amp;&amp; user.password === password;
+
+        if (!isValid) {
+            return reply().redirect(&apos;/login&apos;);
+        }
+
+        var credentials = { name: user.name } // request.auth.credentials
+
+        request.auth.session.set(credentials);
+        return reply(&apos;Logged In&apos;);
+    };
+                        </code></pre>
+                        <small>Validation function becomes a handler and set&apos;s session cookie</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome &apos; + request.auth.credentials.name);
+    };
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var loginPage = function (request, reply) {
+
+        var htmlForm = &apos;<form method="post">&apos; +
+                       &apos;    <p>&apos; +
+                       &apos;        Username: <input type="text" name="username"><br>&apos; +
+                       &apos;        Password: <input type="password" name="password">&apos; +
+                       &apos;    </p>&apos; +
+                       &apos;    <p><input type="submit" value="login"></p>&apos; +
+                       &apos;</form>&apos;;
+
+        reply(htmlForm);
+    };
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var logout = function (request, reply) {
+
+        request.auth.session.clear();
+        reply(&apos;Logged out&apos;);
+    };
+                        </code></pre>
+                        <small>Log out by clearing session cookie</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8188);
+
+    // Load plugins
+    server.pack.register(AuthCookie, function (err) {
+
+        // Configure auth scheme
+        var authOptions = {
+            password: &apos;PasswordUsedToEncryptCookie&apos;,
+            cookie: &apos;NameOfCookie&apos;,
+            redirectTo: &apos;/login&apos;,
+            isSecure: false
+        };
+
+        server.auth.strategy(&apos;YourCookieAuth&apos;, &apos;cookie&apos;, authOptions);
+                            </code></pre>
+                            <small>Register Hapi-auth-cookie plugin.  Auth strategy includes a url to redirect to if authentication fails</small>
+                        </section>
+                        <section>
+                            <h3>Cookie Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+        // Login page
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/login&apos;,
+            handler: loginPage
+        });
+
+        // Logout
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/logout&apos;,
+            handler: logout
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+
+        // Login form post
+        server.route({
+            method: &apos;POST&apos;,
+            path: &apos;/login&apos;,
+            handler: validate,
+            config: {
+                validate: {
+                    payload: {
+                        username: Joi.string().required(),
+                        password: Joi.string().required()
+                    }
+                }
+            }
+        });
+
+        // Start server
+        server.start(function () { console.log(&apos;Started...&apos;); });
+    });
+                        </code></pre>
+                        <small>POST to /login will validate payload automagically</small>
+                    </section>
+                </section><section class="stack">
+                    <section>
+                        <h1>Third Party Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var Bell = require(&apos;bell&apos;);
+    var AuthCookie = require(&apos;hapi-auth-cookie&apos;);
+                    </code></pre>
+                    <small>Include Bell but we still need Hapi-auth-cookie.  Bell must go out to third party for every route it&apos;s used for.  Use a combination of Bell and Hapi-auth-cookie.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome &apos; + request.auth.credentials.name);
+    };
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    var login = function (request, reply) {
+
+        if (request.auth.isAuthenticated) {
+            request.auth.session.set({
+                name: request.auth.credentials.profile.displayName
+            });
+            return reply(&apos;Logged in...&apos;);
+        }
+
+        reply(&apos;Not logged in...&apos;);
+    }
+
+    var logout = function (request, reply) {
+
+        request.auth.session.clear();
+        reply(&apos;Logged out...&apos;);
+    }
+                    </code></pre>
+                    <small>Login handler will be processed after third party auth.  Set session if authenticated.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8189);
+
+    // Load plugins
+    server.pack.register([AuthCookie, Bell], function (err) {
+                    </code></pre>
+                    <small>Register Hapi-auth-cookie and Bell</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure cookie auth scheme
+        server.auth.strategy(&apos;YourCookieAuth&apos;, &apos;cookie&apos;, {
+            password: &apos;PasswordUsedToEncryptCookie&apos;,
+            cookie: &apos;NameOfCookie&apos;,
+            redirectTo: &apos;/login&apos;,
+            isSecure: false
+        });
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure third party auth scheme
+        var bellAuthOptions = {
+            provider: &apos;github&apos;,
+            password: &apos;PasswordUsedToEncryptThirdPartyAuthCookie&apos;,
+            clientId: &apos;YourAppId&apos;,
+            clientSecret: &apos;YourAppSecret&apos;,
+            isSecure: false
+        };
+
+        server.auth.strategy(&apos;YourThirdPartyAuth&apos;, &apos;bell&apos;, bellAuthOptions);
+                    </code></pre>
+                    <small>Third party auth provider will produce clientId and clientSecret to be used when setting auth strategy.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <img src="/images/auth/github-settings.png">
+                    <small>Click the Register New Application button in your Github account settings</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <img src="/images/auth/appdetails.png">
+                    <small>ClientId and clientSecret are shown with the application details</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                    </code></pre>
+                    <small>Private pages use Cookie Auth, not Third Party Auth</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Login page
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/login&apos;,
+            handler: login,
+            config: {
+                auth: &apos;YourThirdPartyAuth&apos;
+            }
+        });
+                    </code></pre>
+                    <small>Login page uses Third Party Auth and then sets session used in Cookie Auth</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Logout
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/logout&apos;,
+            handler: logout,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>About Bell</h3>
+                        <ul>
+                            <li>Existing support for many providers: facebook, github, google, instagram, live, twitter, yahoo, foursquare, bitbucket</li>
+                            <li>API for adding custom providers</li>
+                            <li>Supports OAuth1.0a and OAuth2</li>
+                        </ul>
+                    </section>
+                </section><section>
+                    <h1>Fin.</h1>
+                </section><section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/758786/hapchat.png" data-background-size="initial"><div data-block-type="text" data-block-id="19721408d514c47edf225538cc22b769"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>HapChat</h1>
+</div></div>
+<div data-block-type="text" data-block-id="f817d00a66d1def2b929763469eed121"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p>building a familiar web experience using the hapi http server platform</p>
+</div></div></section><section><div data-block-type="text" data-block-id="694ad535a334610f0750aa0f766dcb29"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<p>Ben Acker</p>
+
+<p>Jeffrey White</p>
+
+<p>Kevin Stevens</p>
+
+<p>Adam Bretz</p>
+
+<p>Colin Ihrig</p>
+
+<p>James Weston</p>
+</div></div>
+<div data-block-type="text" data-block-id="8c9b3a5aa7356f7a3ef638353471f84c"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<p>pre-intro</p>
+
+<p>intro</p>
+
+<p>routes</p>
+
+<p>views</p>
+
+<p>plugins</p>
+
+<p>auth</p>
+</div></div></section><section><div data-block-type="text" data-block-id="6a8bf8eb4457377cd47dec4093198781"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>what&apos;s hapi?</h2>
+</div></div>
+<div data-block-type="text" data-block-id="05e1ff1d808f37899a77a25af40d9395"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="0">
+<p>it&apos;s an http framework for node.js, you crazy!</p>
+</div></div>
+<div data-block-type="image" data-block-id="6e9bd2568df7f51b2a403f7d96933861"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/758888/hapi.png" style="visibility: visible;" data-natural-width="355" data-natural-height="247"></div></div>
+<div data-block-type="text" data-block-id="0e794b8272a7f6aa754a485e9143d652"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="1">
+<h2>huh?</h2>
+</div></div>
+<div data-block-type="text" data-block-id="d32093019f9ee06e09fd53b90181768e"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="2">
+<p>you know how we keep having to build &quot;web servers&quot; and &quot;RESTful services&quot;? hapi makes that really easy, so you can focus on your business logic instead of http bullcrap.</p>
+</div></div>
+<div data-block-type="text" data-block-id="8ee0363ef97401df33c28b5d3110428e"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="3">
+<h2>sounds neat!</h2>
+</div></div>
+<div data-block-type="text" data-block-id="b56049be492f7548b0279662cff5b008"><div data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." data-fragment-index="4">
+<p>word.</p>
+</div></div></section><section><div data-block-type="text" data-block-id="c04cad222c7e5b7a41ae5d855e56c97d"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h2>there&apos;s like tons of stuff all over the place to help you learn about hapi</h2>
+</div></div>
+<div data-block-type="text" data-block-id="67ff9b41b968cdee9250b0af15fdb8b0"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>you guys,</h1>
+</div></div></section><section class="stack"><section><div data-block-type="text" data-block-id="84c5da5f5f5c507bcc244756f8722351"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com</h2>
+</div></div>
+<div data-block-type="image" data-block-id="14ff85db8f24d36ccd3bf35854ce88a8"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759073/hapiweb.jpg" style="visibility: visible;" data-natural-width="1048" data-natural-height="676"></div></div></section><section>
+    <div data-block-type="text" data-block-id="7a38d601399c81e4d5fecf1792d13476">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com/tutorials</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="04b83e35aef304a787fd9baf36c5b147">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759089/hapitut.jpg" style="visibility: visible;" data-natural-width="1048" data-natural-height="839">
+            </div>
+        </div>
+    </section><section>
+    <div data-block-type="text" data-block-id="4fb300d322c0657fcbb0e3ed10a72016">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>http://hapijs.com/api</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="44c49e7208e9aa4e6f5f82db5301c8aa">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759096/hapiapi.jpg" style="visibility: visible;" data-natural-width="1050" data-natural-height="870">
+            </div>
+        </div>
+    </section><section>
+    <div data-block-type="text" data-block-id="436c1124e77f25ae0316957514bec0ba">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>workshopper</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="18ae7a46a2c1f09d28ae5aede12cf734">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759191/hapiworkshopper.jpg" style="visibility: visible;" data-natural-width="535" data-natural-height="417">
+            </div>
+        </div>
+    <div data-block-type="text" data-block-id="c7db2ead317e0aaee883ad7341847957">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<pre style="text-align: center;">npm install -g makemehapi</pre>
+</div>
+        </div>
+<div data-block-type="text" data-block-id="0900974b942724ea8e4201490ece9f10">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<p>(props to Lin Clark)</p>
+</div>
+        </div></section><section>
+    <div data-block-type="text" data-block-id="f0b994dcd65df50ece79794c988b2401">
+        <div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>irc #hapi</h2>
+</div>
+        </div>
+        <div data-block-type="image" data-block-id="6279fb484aca345cbfd03019ef1ebb0f">
+            <div>
+                <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759219/hapiirc.jpg" style="visibility: visible;" data-natural-width="933" data-natural-height="637">
+            </div>
+        </div>
+    </section></section><section><div data-block-type="text" data-block-id="44a0e9b7cbb0cfb35add68c4ac9a745c"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h3 style="text-align:left">hapi is ridiculously easy to get started with, but it also totally supports all that weird http stuff like a champ</h3>
+</div></div>
+<div data-block-type="text" data-block-id="6510855d54076eb9bc36f684a984f3bc"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>you guys,</h1>
+</div></div>
+<div data-block-type="text" data-block-id="ea82e71ed959b3b335222d30efba1e0a"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li class="fragment" data-fragment-index="1">several flavors of auth</li>
+	<li class="fragment" data-fragment-index="1">https</li>
+	<li class="fragment" data-fragment-index="1">smart request routing</li>
+	<li class="fragment" data-fragment-index="1">streaming</li>
+	<li class="fragment" data-fragment-index="1">caching</li>
+	<li class="fragment" data-fragment-index="1">CORS</li>
+</ul>
+</div></div></section><section><div data-block-type="text" data-block-id="f52e0856153cbe5cd58e56134d43baaf"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>plugins!</h1>
+</div></div>
+<div data-block-type="text" data-block-id="4ce8dc21bd1a9f1abfd3b4cd10bc61d7"><div data-placeholder-tag="h2" data-placeholder-text="Title Text" data-fragment-index="0">
+<h3>hapi has a really intuitive plugin architecture that lets you build your tools as plugins you can share among your hapi servers</h3>
+</div></div></section><section><div data-block-type="text" data-block-id="b017c1e32b30cfa70ec72b853ebdd860"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1 style="text-align:center">HapChat</h1>
+</div></div>
+<div data-block-type="text" data-block-id="f7a5ee14da112548335ec19f7d4be0f3"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<h2>don&apos;t call it a ripoff</h2>
+</div></div>
+<div data-block-type="image" data-block-id="af1d868adcef1c1e6b42cd10774de742"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/jeffreywhite/images/759403/hapchat.png" style="visibility: visible;" data-natural-width="144" data-natural-height="144"></div></div>
+<div data-block-type="text" data-block-id="a469e9f5dafb3f528a44a93ea01705dc"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="1">
+<h2>cause that&apos;s mean</h2>
+</div></div></section><section><div data-block-type="text" data-block-id="0589a7483514a89ce566bbcfc7cfb2ff"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1 style="text-align: center;">respect</h1>
+</div></div>
+<div data-block-type="text" data-block-id="32a9644fb056e38a6b7220a2d5db10a0"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<p>Don&apos;t be a yutz. Please read EmpireNode&apos;s Code of Conduct:</p>
+</div></div>
+<div data-block-type="text" data-block-id="d5fb6b128174c406458515a5db0d0787"><div data-placeholder-tag="p" data-placeholder-text="Text" data-fragment-index="0">
+<p><a href="http://jsconf.com/codeofconduct.html" target="_blank">http://jsconf.com/codeofconduct.html</a></p>
+</div></div></section><section><div data-block-type="text" data-block-id="b0e59ea7be7c7d432d67a902789e907b"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>clone<br>
+the<br>
+repo</h1>
+</div></div></section><section><div data-block-type="text" data-block-id="fc8fdbafe84a9b80f86cdc61d099d321"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>let&apos;s<br>
+talk project<br>
+layout</h1>
+</div></div></section><section><div data-block-type="text" data-block-id="df217d3d794f9113e18107a9aedcd31b"><div data-placeholder-tag="h1" data-placeholder-text="Text">
+<h1>And<br>
+I&apos;m<br>
+Done</h1>
+</div></div></section><section class="stack"><section><div data-block-type="text" data-block-id="babefd808ccc0c13f6bf5922d8e4ca49"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Routes in Hapi</h1>
+
+<p> </p>
+
+<p>Or, Routing Hapi-ly</p>
+</div></div></section><section><div data-block-type="text" data-block-id="5472663b2e7f6ba04fd5f8cfc4188e89"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Basic Routing- gets</h1>
+</div></div>
+<div data-block-type="image" data-block-id="85f71be6a670255d98f4023fd5d53b00"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764592/pasted-from-clipboard.png" style="visibility: visible;" data-natural-width="828" data-natural-height="534"></div></div></section><section><div data-block-type="text" data-block-id="16848cdeb6e74bc78585e105d74b260c"><div data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>Post Example</h2>
+</div></div>
+<div data-block-type="image" data-block-id="85f053045204150a542e874b2811e0d7"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764598/pasted-from-clipboard.png" data-natural-width="924" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="73f352e6f2f7107a7bdb61d681d55945"><div data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Paths</h1>
+</div></div>
+<div data-block-type="image" data-block-id="ed4b199f2ae2d6165ad57142af6a05f0"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764602/pasted-from-clipboard.png" data-natural-width="828" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="498560491850c62002a209c128cb1153"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+
+<p> </p>
+</div></div>
+<div data-block-type="image" data-block-id="3e2a9b6902311260c97c8783695f270e"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764608/pasted-from-clipboard.png" data-natural-width="1003" data-natural-height="486" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="e52fc956cf2021f3a678764b248ce615"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+</div></div>
+<div data-block-type="image" data-block-id="bfe2ba5b4b1a8edb6ea72f757e274337"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764613/pasted-from-clipboard.png" data-natural-width="1003" data-natural-height="486" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="6563cff418f3bbe690eb9f485085edf5"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<h1>Hapchat Routes</h1>
+</div></div>
+<div data-block-type="image" data-block-id="138890f721f6f4cac5af21414c308dde"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764616/pasted-from-clipboard.png" data-natural-width="679" data-natural-height="534" style="visibility: visible;"></div></div></section><section><div data-block-type="text" data-block-id="da29637d6ec340b7868413eba1389f9f"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>What if I don&apos;t like the hard stuff, and want to use config?</strong></p>
+</div></div>
+<div data-block-type="image" data-block-id="a7e679776e18857eeb5526ac61d19078"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764622/pasted-from-clipboard.png" data-natural-width="1288" data-natural-height="526" style="visibility: visible;"></div></div></section><section><div data-block-type="image" data-block-id="cc7b5580cef20b2722b9c90de34a5530"><div><img src="https://s3.amazonaws.com/media-p.slid.es/uploads/kevinstevens/images/764624/pasted-from-clipboard.png" data-natural-width="644" data-natural-height="566" style="visibility: visible;"></div></div>
+<div data-block-type="text" data-block-id="ba85af135b4e982b8b5de20a9a6e9a84"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>What other cool stuff can I put in my config? Validation!</strong></p>
+</div></div></section><section><div data-block-type="text" data-block-id="3e4490eb5d0161f94537bd639ec24ceb"><div data-placeholder-tag="p" data-placeholder-text="Text">
+<p><strong>Any other cool stuff we can put in the config?</strong></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p>Of course! Authentication!</p>
+</div></div></section></section><section>
+                <h1>Views and Templates</h1>
+            </section><section>
+                <h3>What We Need</h3>
+                <ul>
+                    <li>Static File Server</li>
+                    <li>Template Engine Integration</li>
+                    <li>Reusable Layouts</li>
+                    <li>Rendering a view with a Context</li>
+                </ul>
+            </section><section>
+                <section>
+                    <h3>Static File Server</h3>
+                    <p>This question comes up often enough in IRC and GitHub to call out specifically</p>
+                    <pre class="fragment" data-fragment-index="0"><code>
+server.route({
+    method: &apos;GET&apos;,
+    path: &apos;/static/{path*}&apos;,
+    config: {
+        auth: false,
+        handler: {
+            directory: {
+                path: Path.join(server.settings.app.root, &apos;static&apos;),
+                listing: false
+            }
+        },
+        cache: {
+            expiresIn: 1000 * 60 * 60 * 24 * 5
+        }
+    }
+});
+                  </code></pre>
+                <p class="fragment" data-fragment-index="1">So this is the general &quot;serve static files&quot; route most web servers need.</p>
+                </section>
+                <section>
+                    <h3>Dissecting the File Server Code</h3>
+                    <p>Regular route with a path, a method, and a configuration</p>
+                    <p>Uses the <b>directory</b> option for the handler, which is documented <a href="http://hapijs.com/api#serverrouteoptions">here</a></p>
+                    <ul>
+                        <li><b>path</b> tells hapi what folder to look through for the requested files.</li>
+                        <li><b>listing</b> tells hapi to not return a listing of files in this directory if &quot;/static&quot; is requested.</li>
+                    </ul>
+                </section>
+            </section><section>
+                <section>
+                    <h3>View Engine Integration</h3>
+                    <p>Like everything else, view engine integration is handled with configuration opens via <b>server.views</b></p>
+                    <p>Supports handlebars, Jade, swig, etc. Really anything that has a <b>compile(context)</b> function</p>
+                    <p class="fragment" data-fragment-index="0">Hapi 7.0 update: the bulk of this logic has been moved into a new module named vision.</p>
+                </section>
+                <section>
+                    <h3>Hanging on to Handlebars</h3>
+                    <pre><code>
+server.views({
+    engines: {
+        html: require(&apos;handlebars&apos;)
+    },
+    path: Path.join(__dirname, &apos;static&apos;, &apos;views&apos;),
+    layoutPath: Path.join(__dirname, &apos;static&apos;, &apos;views&apos;, &apos;layout&apos;),
+    layout: true,
+    layoutKeyword: &apos;partial&apos;
+});
+                    </code></pre>
+                    <p>This is a pretty typical configuration to use &quot;handlebars&quot; server side. This configuration tells hapi/vision to use the handlebars compiller for any view file ending with &quot;.html&quot;.</p>
+                    <p>We&apos;ve elected to use <a href="http://handlebarsjs.com/">handlebars</a> for this application because it uses more of the hapi options. If you use Jade, most of the partial, block, and layouts are handled internally by Jade.</p>
+                    <p class="fragment" data-fragment-index="0">What&apos;s the deal with the rest of those options?</p>
+                </section>
+            </section><section>
+                <h3>Building a Layout File</h3>
+                <p>A layout file is like the side of a house with a window. The brick, roof, color, and presence of a chimney don&apos;t change; the contents of the window does.</p>
+                <p class="fragment" data-fragment-index="0">Let&apos;s quickly go through the set up of how you use layout files with hapi and handlebars.</p>
+            </section><section>
+                <section>
+                    <h3>Making a Home View</h3>
+                    <p>We&apos;ve got our &quot;layout.html&quot; file, now lets make it actually show the user something</p>
+                    <p class="fragment" data-fragment-index="0">Create an &quot;index.html&quot; file in &quot;static/views&quot;</p>
+                    <p class="fragment" data-fragment-index="1">Add a <b>GET</b> route and in the handler use <b>reply.view(&apos;index&apos;)</b></p>
+                </section>
+                <section>
+                    <h3>What Happens?</h3>
+                    <ol>
+                        <li class="fragment" data-fragment-index="0">The request of &quot;/&quot; comes into the server and is routed to the proper handler</li>
+                        <li class="fragment" data-fragment-index="1">In the handler, we run <b>reply.view(&apos;index&apos;)</b></li>
+                        <li class="fragment" data-fragment-index="2"><b>layout</b>, <b>layoutPath</b>, and <b>layoutKeyword</b> are all combined here to first compile &quot;layout.html&quot; (or get it from cache) then &quot;index.html&quot; and place that result inside <b>layoutKeyword</b></li>
+                        <li class="fragment" data-fragment-index="3">The <b>reply</b> interface then sends this block of HTML back out to the client, and now you&apos;ve got yourself a UI.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h3>Putting it into Context</h3>
+                    <p>The second argument to <b>reply.view</b> is the context object that you can use in the view</p>
+                    <pre><code>
+    <h1>Comments</h1>
+    <p>This package uses the following modules</p>
+    <div id="deps">
+        {{#each modules}}
+        <h2><a href="https://www.npmjs.org/package/{{slug}}">{{name}}</a></h2>
+        <div>{{body}}</div>
+        {{/each}}
+    </div>
+                    </code></pre>
+                    <p>So with that view, we should pass a context object that has a <b>modules</b> key that is an array of objects with <b>name</b>, <b>slug</b>, and <b>body</b> values.</p>
+                </section>
+                <section>
+                    <h3>Putting it into Context, Too</h3>
+                    <p>If we pass a context object that looks like this:</p>
+                    <pre><code>
+{
+    &quot;modules&quot;: [{
+        &quot;name&quot;: &apos;boom&apos;,
+        &quot;slug&quot;: &apos;boom&apos;
+    }, {
+        &quot;name&quot;: &apos;joi&apos;,
+        &quot;slug&quot;: &apos;joi&apos;
+    }]
+}
+                    </code></pre>
+                    <p>The view will render out how you&apos;d expect; a list of modules with links to the correct npm page.</p>
+                </section>
+                <section>
+                    <h3>Global Context</h3>
+                    <p>Sometimes you want data to be available in every view&apos;s context (app version, name, copyright data, build number...etc)</p>
+                    <p>Since there isn&apos;t a concept of middleware... where does that go?</p>
+                    <p class="fragment roll-in" data-fragment-index="0">Server extension points to the rescue!</p>
+                </section>
+                <section>
+                    <p>Server extension points are events the server emits that give developers a place to put logic that should be applied all routes.</p>
+                    <p>There are a bunch of different events we can listen for listed <a href="https://github.com/hapijs/hapi/blob/master/docs/Reference.md#request-lifecycle">here</a> but we are going to use <b>onPreResponse</b></p>
+                    <pre class="fragment" data-fragment-index="0"><code>
+server.ext(&apos;onPreResponse&apos;, function (request, reply) {
+
+    if (request.response.variety === &apos;view&apos;) {
+        request.response.source.context = Hoek.applyToDefaults({
+            name:&apos;a sweet app!&apos;,
+            version: &apos;0.9.9999 (but not 1)&apos;
+        }, request.response.source.context || {});
+    }
+
+    reply();
+});
+                    </code></pre>
+                    <p class="fragment" data-fragment-index="1">This will merge in a global text into the existing view context.</p>
+                    <p class="fragment" data-fragment-index="2">However, this might not be necessary <a href="https://github.com/hapijs/vision/issues/4">soon...</a> stay tuned!</p>
+                </section>
+            </section><section>
+                <h3>TL;DR</h3>
+                <ul>
+                    <li>Make sure you static file server is set up.</li>
+                    <li>Easy to integrate view engines.</li>
+                    <li>Use those extension points!</li>
+                    <li>Don&apos;t reinvent the wheel; if you&apos;re using an template engine (and you should unless you&apos;re a robot), use layout files</li>
+                </ul>
+                <p>So we should probably start securing this thing...</p>
+            </section><section>
+                <h1>Plugins</h1>
+                <h3>Extending the hapi platform</h3>
+            </section><section>
+                <h3>What are Plugins?</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Primary ecosystem around hapi</li>
+                    <li class="fragment" data-fragment-index="1">Allow you to extend hapi</li>
+                    <li class="fragment" data-fragment-index="2">General purpose utilities</li>
+                    <li class="fragment" data-fragment-index="3">Custom business logic</li>
+                    <li class="fragment" data-fragment-index="4">Clean division of work among teams</li>
+                    <li class="fragment" data-fragment-index="5">Simple to build and use!</li>
+                </ul>
+            </section><section>
+                <h3>Existing Plugins</h3>
+
+                <img src="/images/plugins/good.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/crumb.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/poop.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/bassmaster.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/tv.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/scooter.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/lout.png" height="90" style="border:none; background:none; box-shadow:none;">
+                <img src="/images/plugins/yar.png" height="90" style="border:none; background:none; box-shadow:none;">
+
+                <p class="fragment" data-fragment-index="0">Many more that don&apos;t have cool pictures!</p>
+            </section><section>
+                <h3>Creating a Plugin - Naming</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Pick a good name!</li>
+                    <li class="fragment" data-fragment-index="1">The name is used as a unique key</li>
+                    <li class="fragment" data-fragment-index="2">Publish to npm to own the name</li>
+                    <li class="fragment" data-fragment-index="3">Be careful with private plugins as names can conflict!</li>
+                </ul>
+            </section><section>
+                <h3>Creating a Plugin - Registration</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Plugin <strong>must</strong> expose a registration method:
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    // Plugin functionality
+
+    next();
+};
+                        </code></pre>
+                        <ul>
+                            <li><code>plugin</code> lets you interact with server pack</li>
+                            <li><code>options</code> allows configuration settings to be passed in</li>
+                            <li><code>next(err)</code> is called when registration is complete</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Creating a Plugin - Attributes</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Plugin <strong>must</strong> attach <code>attributes</code> object to <code>register()</code></li>
+                    <li class="fragment" data-fragment-index="1">Plugin <strong>must</strong> declare <code>name</code> and <code>version</code> attributes</li>
+                    <li class="fragment" data-fragment-index="2">Two ways to do this:
+                        <pre><code>
+module.exports.register.attributes = {
+    name: &apos;myPlugin&apos;,
+    version: 1.0.0
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="3">Or:
+                        <pre><code>
+module.exports.register.attributes = {
+    pkg: require(&apos;./package.json&apos;)
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="4"><code>multiple</code> attribute indicates if plugin can be registered multiple times to same server</li>
+                </ul>
+            </section><section>
+                <h3>What Can a Plugin Do?</h3>
+
+                <ul style="width:100%">
+                    <li class="fragment" data-fragment-index="0" style="width:100%">Register routes
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.route({
+        method: &apos;GET&apos;,
+        path: &apos;/&apos;,
+        handler: handler
+    });
+
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">Expose properties and methods
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.expose(&apos;greet&apos;, function () {
+
+        console.log(options.greeting);
+    });
+
+    next();
+};
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>What Can a Plugin Do? (Continued)</h3>
+
+                <ul style="width:100%">
+                    <li class="fragment" data-fragment-index="0">Access hapi and other plugins
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.plugins.otherPlugin.greet();
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">Declare dependencies on other plugins
+                        <pre><code>
+module.exports.register = function (plugin, options, next) {
+
+    plugin.dependency([&apos;poop&apos;, &apos;yar&apos;]);
+    next();
+};
+                        </code></pre>
+                    </li>
+                    <li class="fragment" data-fragment-index="2">Much more!</li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Loaded into server pack by calling <code>pack.register()</code>
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var MyPlugin = require(&apos;myPlugin&apos;);
+var server = new Hapi.Server();
+
+server.pack.register(MyPlugin, function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin (Continued)</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">To pass configuration options, pass an object:
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var server = new Hapi.Server();
+var plugin = {
+    plugin: require(&apos;myPlugin&apos;),
+    options: { greeting: &apos;Hello!&apos; }
+};
+
+server.pack.register(plugin, function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Using Your Plugin (Continued)</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">Multiple plugins can be registered by passing in an array:
+
+                        <pre><code>
+var Hapi = require(&apos;hapi&apos;);
+var MyPlugin = require(&apos;myPlugin&apos;);
+var YourPlugin = require(&apos;yourPlugin&apos;);
+var server = new Hapi.Server();
+
+server.pack.register([MyPlugin, YourPlugin], function (err) {
+
+    if (err) {
+        return console.error(&apos;Load failure: &apos; + err);
+    }
+
+    server.start();
+});
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>More Plugin Resources</h3>
+
+                <ul>
+                    <li class="fragment" data-fragment-index="0">
+                        <p>hapijs.com Plugin Listing</p>
+                        <p><a href="http://hapijs.com/plugins">http://hapijs.com/plugins</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="1">
+                        <p>hapijs.com Plugin Tutorial</p>
+                        <p><a href="http://hapijs.com/tutorials/plugins">http://hapijs.com/tutorials/plugins</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="2">
+                        <p>hapi API Reference</p>
+                        <p><a href="https://github.com/hapijs/hapi/blob/master/docs/Reference.md">https://github.com/hapijs/hapi/blob/master/docs/Reference.md</a></p>
+                    </li>
+                    <li class="fragment" data-fragment-index="3">
+                        <p>Search the npm repository</p>
+                        <pre><code>
+npm search hapi
+                        </code></pre>
+                    </li>
+                </ul>
+            </section><section>
+                <h3>Now...</h3>
+                <div data-fragment-index="0">
+                    <p>How about a real example using bell?</p>
+                    <img src="/images/plugins/darkwingduck.gif">
+                </div>
+            </section><section>
+                    <h1>Auth</h1>
+                        <img src="/images/auth/dogs.jpg">
+                    <p></p>
+                </section><section>
+                    <h3>HTTP Basic Access Authentication</h3>
+                    <ul>
+                        <li>Defined by <a href="http://tools.ietf.org/html/rfc2617">RFC 2617</a> and <a href="https://tools.ietf.org/html/rfc7235">RFC 7235</a></li>
+                        <li>Challenge/Response scheme</li>
+                        <li>Built in support in web browser</li>
+                        <li>Uses HTTP headers</li>
+                    </ul>
+                </section><section>
+                    <h3>Cookie Based Authentication</h3>
+                    <ul>
+                        <li>Username and password is collected by app</li>
+                        <li>Application endpoint validates payload and sets cookie</li>
+                        <li>Application considers user authenticated if cookie is present and valid</li>
+                    </ul>
+                </section><section>
+                    <h3>Third-party Authentication</h3>
+                    <ul>
+                        <li>Password less authentication</li>
+                        <li>Rely on popular sites to provide auth</li>
+                        <li>Uses a series of redirects and token exchanges to authorize</li>
+                        <li>OAuth defined by <a href="https://tools.ietf.org/html/rfc5849">RFC 5849</a> and <a href="https://tools.ietf.org/html/rfc6749">RFC 6749</a></li>
+                    </ul>
+                </section><section>
+                    <h4>How much work does it take to implement these schemes in Hapi?</h4>
+                    <p class="fragment" data-fragment-index="0">None</p>
+                    <p class="fragment" data-fragment-index="1">OK, some work...</p>
+                    <p class="fragment" data-fragment-index="2">But not much</p>
+                </section><section>
+                    <h3>Hapi.js Auth Plugins</h3>
+                    <ul>
+                        <li><a href="https://github.com/hapijs/hapi-auth-basic">https://github.com/hapijs/hapi-auth-basic</a></li>
+                        <li><a href="https://github.com/hapijs/hapi-auth-cookie">https://github.com/hapijs/hapi-auth-cookie</a></li>
+                        <li><a href="https://github.com/hapijs/bell">https://github.com/hapijs/bell</a></li>
+                        <li><a href="https://github.com/hapijs/hapi-auth-hawk">https://github.com/hapijs/hapi-auth-hawk</a></li>
+                    <p></p>
+                </ul></section><section class="stack">
+                    <section>
+                        <h1>Basic Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var Basic = require(&apos;hapi-auth-basic&apos;);
+                        </code></pre>
+                        <small>Load Hapi-auth-basic</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // User database
+    var users = {
+        empire: {
+            password: &apos;node&apos;,
+            name: &apos;Empire Node User&apos;
+        }
+    };
+
+    // Function used to validate a user
+    var validate = function (username, password, callback) {
+
+        var user = users[username];
+        var isValid = user &amp;&amp; user.password === password;
+        var credentials = { name: user.name } // request.auth.credentials
+
+        return callback(null, isValid, credentials);
+    };
+                        </code></pre>
+                        <small>Create user database and validation function</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome&apos; + request.auth.credentials.name);
+    };
+                        </code></pre>
+                        <small>Private handler can be assured that request.auth.credentials is for a valid user</small>
+                    </section>
+                    <section>
+                        <h3>Basic Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8187);
+
+    // Load plugins
+    server.pack.register(Basic, function (err) {
+
+        // Configure auth scheme
+        var authOptions = {
+            validateFun: validate
+        };
+        server.auth.strategy(&apos;YourSimpleAuth&apos;, &apos;basic&apos;, authOptions);
+                            </code></pre>
+                            <small>Register basic plugin and configure auth strategy to use validate function</small>
+                        </section>
+                        <section>
+                            <h3>Basic Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourSimpleAuth&apos;
+            }
+        });
+                            </code></pre>
+                            <small>Private handler gets an additional config param which references auth strategy</small>
+                        </section>
+                        <section>
+                            <h3>Basic Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+        // Start server
+        server.start(function () { console.log(&apos;Started...&apos;); });
+    });
+                        </code></pre>
+                    </section>
+                </section><section class="stack">
+                    <section>
+                        <h1>Cookie Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var AuthCookie = require(&apos;hapi-auth-cookie&apos;);
+    var Joi = require(&apos;joi&apos;);
+                        </code></pre>
+                        <small>Load Hapi-auth-cookie plugin instead of basic and load Joi for payload validation</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // User database
+    var users = {
+        empire: {
+            password: &apos;node&apos;,
+            name: &apos;Empire Node User&apos;
+        }
+    };
+                        </code></pre>
+                        <small>Still need a user database to reference</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var validate = function (request, reply) {
+
+        var username = request.payload.username;
+        var password = request.payload.password;
+
+        var user = users[username];
+        var isValid = user &amp;&amp; user.password === password;
+
+        if (!isValid) {
+            return reply().redirect(&apos;/login&apos;);
+        }
+
+        var credentials = { name: user.name } // request.auth.credentials
+
+        request.auth.session.set(credentials);
+        return reply(&apos;Logged In&apos;);
+    };
+                        </code></pre>
+                        <small>Validation function becomes a handler and set&apos;s session cookie</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome &apos; + request.auth.credentials.name);
+    };
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var loginPage = function (request, reply) {
+
+        var htmlForm = &apos;<form method="post">&apos; +
+                       &apos;    <p>&apos; +
+                       &apos;        Username: <input type="text" name="username"><br>&apos; +
+                       &apos;        Password: <input type="password" name="password">&apos; +
+                       &apos;    </p>&apos; +
+                       &apos;    <p><input type="submit" value="login"></p>&apos; +
+                       &apos;</form>&apos;;
+
+        reply(htmlForm);
+    };
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    var logout = function (request, reply) {
+
+        request.auth.session.clear();
+        reply(&apos;Logged out&apos;);
+    };
+                        </code></pre>
+                        <small>Log out by clearing session cookie</small>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8188);
+
+    // Load plugins
+    server.pack.register(AuthCookie, function (err) {
+
+        // Configure auth scheme
+        var authOptions = {
+            password: &apos;PasswordUsedToEncryptCookie&apos;,
+            cookie: &apos;NameOfCookie&apos;,
+            redirectTo: &apos;/login&apos;,
+            isSecure: false
+        };
+
+        server.auth.strategy(&apos;YourCookieAuth&apos;, &apos;cookie&apos;, authOptions);
+                            </code></pre>
+                            <small>Register Hapi-auth-cookie plugin.  Auth strategy includes a url to redirect to if authentication fails</small>
+                        </section>
+                        <section>
+                            <h3>Cookie Auth</h3>
+                            <pre><code data-trim="" contenteditable="">
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+        // Login page
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/login&apos;,
+            handler: loginPage
+        });
+
+        // Logout
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/logout&apos;,
+            handler: logout
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Cookie Auth</h3>
+                        <pre><code data-trim="" contenteditable="">
+
+        // Login form post
+        server.route({
+            method: &apos;POST&apos;,
+            path: &apos;/login&apos;,
+            handler: validate,
+            config: {
+                validate: {
+                    payload: {
+                        username: Joi.string().required(),
+                        password: Joi.string().required()
+                    }
+                }
+            }
+        });
+
+        // Start server
+        server.start(function () { console.log(&apos;Started...&apos;); });
+    });
+                        </code></pre>
+                        <small>POST to /login will validate payload automagically</small>
+                    </section>
+                </section><section class="stack">
+                    <section>
+                        <h1>Third Party Auth</h1>
+                        <pre><code data-trim="" contenteditable="">
+    // Load modules
+    var Hapi = require(&apos;hapi&apos;);
+    var Bell = require(&apos;bell&apos;);
+    var AuthCookie = require(&apos;hapi-auth-cookie&apos;);
+                    </code></pre>
+                    <small>Include Bell but we still need Hapi-auth-cookie.  Bell must go out to third party for every route it&apos;s used for.  Use a combination of Bell and Hapi-auth-cookie.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    // Handlers
+    var publicHandler = function (request, reply) {
+
+        reply(&apos;Everyone can see this...&apos;);
+    };
+
+    var privateHandler = function (request, reply) {
+
+        reply(&apos;Welcome &apos; + request.auth.credentials.name);
+    };
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    var login = function (request, reply) {
+
+        if (request.auth.isAuthenticated) {
+            request.auth.session.set({
+                name: request.auth.credentials.profile.displayName
+            });
+            return reply(&apos;Logged in...&apos;);
+        }
+
+        reply(&apos;Not logged in...&apos;);
+    }
+
+    var logout = function (request, reply) {
+
+        request.auth.session.clear();
+        reply(&apos;Logged out...&apos;);
+    }
+                    </code></pre>
+                    <small>Login handler will be processed after third party auth.  Set session if authenticated.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+    // Create server
+    var server = new Hapi.Server(8189);
+
+    // Load plugins
+    server.pack.register([AuthCookie, Bell], function (err) {
+                    </code></pre>
+                    <small>Register Hapi-auth-cookie and Bell</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure cookie auth scheme
+        server.auth.strategy(&apos;YourCookieAuth&apos;, &apos;cookie&apos;, {
+            password: &apos;PasswordUsedToEncryptCookie&apos;,
+            cookie: &apos;NameOfCookie&apos;,
+            redirectTo: &apos;/login&apos;,
+            isSecure: false
+        });
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure third party auth scheme
+        var bellAuthOptions = {
+            provider: &apos;github&apos;,
+            password: &apos;PasswordUsedToEncryptThirdPartyAuthCookie&apos;,
+            clientId: &apos;YourAppId&apos;,
+            clientSecret: &apos;YourAppSecret&apos;,
+            isSecure: false
+        };
+
+        server.auth.strategy(&apos;YourThirdPartyAuth&apos;, &apos;bell&apos;, bellAuthOptions);
+                    </code></pre>
+                    <small>Third party auth provider will produce clientId and clientSecret to be used when setting auth strategy.</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <img src="/images/auth/github-settings.png">
+                    <small>Click the Register New Application button in your Github account settings</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <img src="/images/auth/appdetails.png">
+                    <small>ClientId and clientSecret are shown with the application details</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Configure routes after plugins are loaded
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/public&apos;,
+            handler: publicHandler
+        });
+
+        // Configure protected routes by setting auth
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/private&apos;,
+            handler: privateHandler,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                    </code></pre>
+                    <small>Private pages use Cookie Auth, not Third Party Auth</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Login page
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/login&apos;,
+            handler: login,
+            config: {
+                auth: &apos;YourThirdPartyAuth&apos;
+            }
+        });
+                    </code></pre>
+                    <small>Login page uses Third Party Auth and then sets session used in Cookie Auth</small>
+                </section>
+                <section>
+                    <h3>Third Party Auth</h3>
+                    <pre><code data-trim="" contenteditable="">
+        // Logout
+        server.route({
+            method: &apos;GET&apos;,
+            path: &apos;/logout&apos;,
+            handler: logout,
+            config: {
+                auth: &apos;YourCookieAuth&apos;
+            }
+        });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>About Bell</h3>
+                        <ul>
+                            <li>Existing support for many providers: facebook, github, google, instagram, live, twitter, yahoo, foursquare, bitbucket</li>
+                            <li>API for adding custom providers</li>
+                            <li>Supports OAuth1.0a and OAuth2</li>
+                        </ul>
+                    </section>
+                </section><section>
+                    <h1>Fin.</h1>
+                </section></div>
+    </div>
+
+    <script src="/lib/js/head.min.js"></script>
+    <script src="/js/reveal.min.js"></script>
+
+    <script>
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: '/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: '/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+
+    </script>
+
+    </body>
+</html>
