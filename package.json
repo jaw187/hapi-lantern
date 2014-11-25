@@ -1,6 +1,6 @@
 {
   "name": "hapi-lantern",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Hapi plugin for serving slide decks",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/jaw187/hapi-lantern",
   "dependencies": {
     "bespoke": "1.x.x",
-    "handlebars": "^2.0.0",
+    "handlebars": "2.x.x",
     "reveal.js": "2.x.x"
   },
   "peerDependencies": {
